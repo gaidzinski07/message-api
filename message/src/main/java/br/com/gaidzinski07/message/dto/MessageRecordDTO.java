@@ -5,5 +5,5 @@ import jakarta.validation.constraints.NotNull;
 
 import java.sql.Timestamp;
 
-public record MessageRecordDTO(String text, Timestamp tsMessage) {
+public record MessageRecordDTO(@NotNull String text, @NotNull String ownerId, @NotNull String chatId) {
 }

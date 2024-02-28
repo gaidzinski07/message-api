@@ -12,9 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class PersonService {
@@ -35,14 +33,14 @@ public class PersonService {
     public Person enterChat(PersonChatDTO dto) {
         Person person = repository.getReferenceById(dto.person());
         Chat chat = chatRepository.getReferenceById(dto.chat());
-        List<Chat> chatList = person.getChats() == null ? new ArrayList<>() : person.getChats();
+        Set<Chat> chatList = person.getChats() == null ? new HashSet<>() : person.getChats();
         chatList.add(chat);
         person.setChats(chatList);
         return repository.save(person);
     }
 
-    public List<Chat> getPersonChats(PersonSearchDTO dto) {
-        Person person = repository.getReferenceById(UUID.fromString(dto.id()));
+    public Set<Chat> getPersonChats(String id) {
+        Person person = repository.getReferenceById(UUID.fromString(id));
         return person.getChats();
     }
 }

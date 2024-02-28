@@ -1,5 +1,6 @@
 package br.com.gaidzinski07.message.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -30,13 +31,21 @@ public class Message implements Serializable {
     @NotNull
     private Timestamp tsMessage;
 
+    @JsonBackReference
     @NotNull
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="chat_id")
     private Chat chat;
 
     @NotNull
-    @OneToOne
+    @ManyToOne
     @JoinColumn
     private Person owner;
+
+    public Message(String text, Timestamp tsMessage, Chat chat, Person owner) {
+        this.text = text;
+        this.tsMessage = tsMessage;
+        this.chat = chat;
+        this.owner = owner;
+    }
 }
